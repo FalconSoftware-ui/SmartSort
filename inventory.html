@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Inventory</title>
+</head>
+<body>
+    <header class="navbar">
+        <h1>SmartSort Inventory</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/inventory">Inventory</a>
+            <a href="/suppliers">Suppliers</a>
+        </nav>
+    </header>
+    <main>
+        <section class="inventory-form">
+            <h2>Add New Inventory Item</h2>
+            <form id="add-item-form">
+                <input type="text" name="item_name" placeholder="Item Name" required>
+                <input type="number" name="quantity" placeholder="Quantity" required>
+                <input type="text" name="location" placeholder="Location">
+                <button type="submit" class="btn">Add Item</button>
+            </form>
+        </section>
+        <section class="inventory-list">
+            <h2>Current Inventory</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>SKU</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Location</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in items %}
+                    <tr>
+                        <td>{{ item.sku }}</td>
+                        <td>{{ item.item_name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.location }}</td>
+                        <td>
+                            <button class="dispatch-btn" onclick="dispatchItem({{ item.id }})">Dispatch</button>
+                            <button class="delete-btn" onclick="deleteItem({{ item.id }})">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 SmartSort. All rights reserved.</p>
+    </footer>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
